@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDF Restructor - 智能PDF转EPUB工具</title>
+    <meta name="description" content="一个能够将PDF文档智能转换为可重排EPUB电子书的工具。支持OCR识别、智能排版、字体优化。">
+    <meta name="keywords" content="PDF, EPUB, 电子书, OCR, 转换工具, 中文排版">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="PDF Restructor - 智能PDF转EPUB工具">
+    <meta property="og:description" content="智能PDF转EPUB，支持OCR识别和智能排版">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://yourusername.github.io/pdf-restructor">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+SC:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+        }
+        .serif {
+            font-family: 'Noto Serif SC', serif;
+        }
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        .code-block {
+            background: #1e293b;
+            color: #e2e8f0;
+            border-radius: 8px;
+            padding: 1.5rem;
+            overflow-x: auto;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.9rem;
+        }
+        .feature-icon {
+            width: 64px;
+            height: 64px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 28px;
+            margin-bottom: 1.5rem;
+        }
+        .step-number {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+        .star-count {
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm fixed w-full z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <span class="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-600 to-blue-600">
+                        PDF Restructor
+                    </span>
+                </div>
+                <div class="flex items-center space-x-6">
+                    <a href="#features" class="text-gray-600 hover:text-purple-600 transition">功能特性</a>
+                    <a href="#install" class="text-gray-600 hover:text-purple-600 transition">安装使用</a>
+                    <a href="https://github.com/yourusername/pdf-restructor" target="_blank" 
+                       class="bg-gray-900 text-white px-4 py-2 rounded-lg hover:bg-gray-800 transition flex items-center gap-2">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                        GitHub
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="gradient-bg min-h-screen flex items-center justify-center pt-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h1 class="text-5xl md:text-7xl font-bold text-white mb-6 leading-tight serif">
+                智能PDF转EPUB
+            </h1>
+            <p class="text-xl md:text-2xl text-purple-100 mb-8 max-w-3xl mx-auto leading-relaxed">
+                不仅仅是格式转换，更是文档重构。<br/>
+                智能识别排版结构，去除页眉页脚，生成真正可重排的电子书。
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                <a href="#download" class="bg-white text-purple-700 px-8 py-4 rounded-full font-semibold text-lg hover:bg-gray-100 transition shadow-lg">
+                    立即下载
+                </a>
+                <a href="#demo" class="border-2 border-white text-white px-8 py-4 rounded-full font-semibold text-lg hover:bg-white hover:text-purple-700 transition">
+                    查看演示
+                </a>
+            </div>
+            
+            <!-- GitHub Stars -->
+            <div class="mt-12 flex justify-center gap-6">
+                <div class="bg-white/20 backdrop-blur rounded-full px-6 py-3 text-white flex items-center gap-2">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                    <span class="star-count font-bold">500+</span> Stars
+                </div>
+                <div class="bg-white/20 backdrop-blur rounded-full px-6 py-3 text-white flex items-center gap-2">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/></svg>
+                    <span class="font-bold">100+</span> Forks
+                </div>
+            </div>
+            
+            <!-- Preview Image -->
+            <div class="mt-12 bg-white rounded-2xl shadow-2xl p-4 max-w-4xl mx-auto">
+                <img src="assets/preview.png" alt="PDF Restructor 预览" class="rounded-xl w-full" 
+                     onerror="this.style.display='none'">
+                <div class="bg-gray-100 rounded-xl p-8 text-center" id="demo-placeholder">
+                    <p class="text-gray-500">📸 预览截图</p>
+                    <p class="text-sm text-gray-400 mt-2">支持智能排版、字体调整、目录生成</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="py-24 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-gray-900 mb-4 serif">核心功能</h2>
+                <p class="text-xl text-gray-600">让PDF阅读更舒适</p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Feature 1 -->
+                <div class="card-hover bg-white rounded-2xl p-8 border border-gray-100">
+                    <div class="feature-icon">🧠</div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">智能结构识别</h3>
+                    <p class="text-gray-600 leading-relaxed">
+                        自动识别标题层级、段落、章节结构，重建文档大纲，生成完整的目录导航。
+                    </p>
+                </div>
+                
+                <!-- Feature 2 -->
+                <div class="card-hover bg-white rounded-2xl p-8 border border-gray-100">
+                    <div class="feature-icon">🧹</div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">智能清理</h3>
+                    <p class="text-gray-600 leading-relaxed">
+                        自动去除页眉、页脚、页码等排版噪声，合并跨页段落，还原干净阅读体验。
+                    </p>
+                </div>
+                
+                <!-- Feature 3 -->
+                <div class="card-hover bg-white rounded-2xl p-8 border border-gray-100">
+                    <div class="feature-icon">🔍</div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">OCR文字识别</h3>
+                    <p class="text-gray-600 leading-relaxed">
+                        支持扫描版PDF，使用Tesseract/EasyOCR进行高精度文字识别，支持中文。
+                    </p>
+                </div>
+                
+                <!-- Feature 4 -->
+                <div class="card-hover bg-white rounded-2xl p-8 border border-gray-100">
+                    <div class="feature-icon">📱</div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">真正可重排</h3>
+                    <p class="text-gray-600 leading-relaxed">
+                        生成的EPUB可在任意设备调整字体大小，自适应手机屏幕，支持夜间模式。
+                    </p>
+                </div>
+                
+                <!-- Feature 5 -->
+                <div class="card-hover bg-white rounded-2xl p-8 border border-gray-100">
+                    <div class="feature-icon">🎨</div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">字体优化</h3>
+                    <p class="text-gray-600 leading-relaxed">
+                        支持自定义字体、字号、行距，优化中文排版，支持多种字体回退。
+                    </p>
+                </div>
+                
+                <!-- Feature 6 -->
+                <div class="card-hover bg-white rounded-2xl p-8 border border-gray-100">
+                    <div class="feature-icon">🖼️</div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">图片处理</h3>
+                    <p class="text-gray-600 leading-relaxed">
+                        保留并优化图片，自动压缩和调整尺寸，支持封面生成。
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Install Section -->
+    <section id="install" class="py-24 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-gray-900 mb-4 serif">快速开始</h2>
+                <p class="text-xl text-gray-600">三步完成安装</p>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8 mb-16">
+                <!-- Step 1 -->
+                <div class="bg-white rounded-2xl p-8 border border-gray-200">
+                    <div class="step-number mb-6">1</div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">安装Python</h3>
+                    <p class="text-gray-600 mb-4">确保已安装 Python 3.8+</p>
+                    <div class="code-block">
+                        <span class="text-green-400">$</span> python --version
+                    </div>
+                </div>
+                
+                <!-- Step 2 -->
+                <div class="bg-white rounded-2xl p-8 border border-gray-200">
+                    <div class="step-number mb-6">2</div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">克隆仓库</h3>
+                    <p class="text-gray-600 mb-4">下载项目代码</p>
+                    <div class="code-block">
+                        <span class="text-green-400">$</span> git clone https://github.com/yourusername/pdf-restructor.git<br>
+                        <span class="text-green-400">$</span> cd pdf-restructor
+                    </div>
+                </div>
+                
+                <!-- Step 3 -->
+                <div class="bg-white rounded-2xl p-8 border border-gray-200">
+                    <div class="step-number mb-6">3</div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">安装依赖</h3>
+                    <p class="text-gray-600 mb-4">安装必要依赖</p>
+                    <div class="code-block">
+                        <span class="text-green-400">$</span> pip install -r requirements.txt
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Usage -->
+            <div class="bg-white rounded-2xl p-8 border border-gray-200">
+                <h3 class="text-2xl font-bold text-gray-900 mb-6">使用方法</h3>
+                
+                <div class="space-y-6">
+                    <div>
+                        <h4 class="font-semibold text-gray-900 mb-2">🎯 命令行使用</h4>
+                        <div class="code-block">
+                            <span class="text-gray-400"># 基本转换</span><br>
+                            <span class="text-green-400">$</span> python test_with_user_pdf.py book.pdf<br><br>
+                            
+                            <span class="text-gray-400"># 启用OCR（扫描版PDF）</span><br>
+                            <span class="text-green-400">$</span> python test_with_user_pdf.py scan.pdf --ocr<br><br>
+                            
+                            <span class="text-gray-400"># 自定义输出</span><br>
+                            <span class="text-green-400">$</span> python test_with_user_pdf.py book.pdf -o output.epub
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h4 class="font-semibold text-gray-900 mb-2">🖥️ 图形界面</h4>
+                        <div class="code-block">
+                            <span class="text-green-400">$</span> python gui_converter.py
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Comparison Section -->
+    <section class="py-24 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-gray-900 mb-4 serif">与传统转换器对比</h2>
+            </div>
+            
+            <div class="overflow-x-auto">
+                <table class="w-full">
+                    <thead>
+                        <tr class="bg-purple-600 text-white">
+                            <th class="py-4 px-6 text-left rounded-tl-lg">功能</th>
+                            <th class="py-4 px-6 text-center">传统转换器</th>
+                            <th class="py-4 px-6 text-center rounded-tr-lg">PDF Restructor</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="border-b border-gray-100">
+                            <td class="py-4 px-6 font-medium">页眉页脚去除</td>
+                            <td class="py-4 px-6 text-center text-red-500">❌ 保留</td>
+                            <td class="py-4 px-6 text-center text-green-500">✅ 自动去除</td>
+                        </tr>
+                        <tr class="border-b border-gray-100 bg-gray-50">
+                            <td class="py-4 px-6 font-medium">段落合并</td>
+                            <td class="py-4 px-6 text-center text-red-500">❌ 分页断开</td>
+                            <td class="py-4 px-6 text-center text-green-500">✅ 智能合并</td>
+                        </tr>
+                        <tr class="border-b border-gray-100">
+                            <td class="py-4 px-6 font-medium">字体调整</td>
+                            <td class="py-4 px-6 text-center text-yellow-500">⚠️ 有限</td>
+                            <td class="py-4 px-6 text-center text-green-500">✅ 完全支持</td>
+                        </tr>
+                        <tr class="border-b border-gray-100 bg-gray-50">
+                            <td class="py-4 px-6 font-medium">OCR识别</td>
+                            <td class="py-4 px-6 text-center text-red-500">❌ 不支持</td>
+                            <td class="py-4 px-6 text-center text-green-500">✅ 内置支持</td>
+                        </tr>
+                        <tr>
+                            <td class="py-4 px-6 font-medium">目录生成</td>
+                            <td class="py-4 px-6 text-center text-yellow-500">⚠️ 简单</td>
+                            <td class="py-4 px-6 text-center text-green-500">✅ 完整结构</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- Download Section -->
+    <section id="download" class="py-24 gradient-bg">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-4xl font-bold text-white mb-6 serif">开始使用</h2>
+            <p class="text-xl text-purple-100 mb-8">
+                开源免费，欢迎 Star ⭐
+            </p>
+            
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="https://github.com/yourusername/pdf-restructor/archive/refs/heads/main.zip" 
+                   class="bg-white text-purple-700 px-8 py-4 rounded-full font-semibold text-lg hover:bg-gray-100 transition shadow-lg flex items-center justify-center gap-2">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+                    下载源码
+                </a>
+                <a href="https://github.com/yourusername/pdf-restructor" target="_blank"
+                   class="border-2 border-white text-white px-8 py-4 rounded-full font-semibold text-lg hover:bg-white hover:text-purple-700 transition flex items-center justify-center gap-2">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                    查看 GitHub
+                </a>
+            </div>
+            
+            <div class="mt-12 text-purple-100 text-sm">
+                <p>许可证：MIT License | 作者：PDF Restructor Team</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-gray-400 py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-white font-bold text-lg mb-4">PDF Restructor</h3>
+                    <p class="text-sm">智能PDF转EPUB工具，让阅读更舒适。</p>
+                </div>
+                <div>
+                    <h4 class="text-white font-semibold mb-4">链接</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="https://github.com/yourusername/pdf-restructor" class="hover:text-white transition">GitHub</a></li>
+                        <li><a href="#features" class="hover:text-white transition">功能特性</a></li>
+                        <li><a href="#install" class="hover:text-white transition">文档</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-semibold mb-4">贡献</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="https://github.com/yourusername/pdf-restructor/issues" class="hover:text-white transition">报告问题</a></li>
+                        <li><a href="https://github.com/yourusername/pdf-restructor/pulls" class="hover:text-white transition">提交PR</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-semibold mb-4">关注我们</h4>
+                    <div class="flex space-x-4">
+                        <a href="https://github.com/yourusername" class="text-gray-400 hover:text-white transition">
+                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-sm">
+                <p>&copy; 2024 PDF Restructor. MIT License.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>
